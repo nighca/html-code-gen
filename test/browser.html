@@ -30,18 +30,19 @@
 		n = document.implementation.createHTMLDocument('');
 		n.firstElementChild.innerHTML = code;
 
-		var formatted = window.htmlCodeGen.print(n, {
+		window.htmlCodeGen.print(n, {
 			'no-format': false,
 			'formatter': {
 				script: function(code, node, opt, helper){
-					return (opt['no-format'] ? '' : helper.indent(opt)) + ['/*', 'script', node.getAttribute('type'), '*/'].join(' ');
+					return (opt['no-format'] ? '' : helper.indent(['/*', 'script', node.getAttribute('type'), '*/'].join(' '), opt));
 				},
 				style: function(code, node, opt, helper){
-					return (opt['no-format'] ? '' : helper.indent(opt)) + ['/*', 'style', node.getAttribute('type'), '*/'].join(' ');
+					return Promise.resolve(opt['no-format'] ? '' : helper.indent(['/*', 'style', node.getAttribute('type'), '*/'].join(' '), opt));
 				}
 			}
+		}).then(function (formatted) {
+			output.value = formatted;
 		});
-		output.value = formatted;
 	});
 
 	</script>

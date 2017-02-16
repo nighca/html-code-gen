@@ -13,6 +13,9 @@
     "jasmine-node": "^1.14.5",
     "uglify-js": "^2.4.16"
   },
+  "engines": {
+    "node": ">=4"
+  },
   "scripts": {
     "lint": "fecs -v && fecs lib test index.js --type=js",
     "browserify": "browserify ./index.js -s html-code-gen -o browser/html-code-gen.js",
